@@ -136,9 +136,13 @@ class BackgroundRemover {
 
             console.log('Calling removeBackground...');
 
-            // Remove background
+            // Remove background with config for GitHub Pages (no cross-origin isolation)
             const blob = await removeBackground(imageUrl, {
+                publicPath: 'https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/dist/',
+                debug: true,
+                proxyToWorker: false, // Disable worker to avoid cross-origin issues
                 progress: (key, current, total) => {
+                    console.log(`Progress: ${key} - ${current}/${total}`);
                     const percentage = Math.round((current / total) * 80) + 10;
                     const messages = {
                         'fetch': 'Loading model...',

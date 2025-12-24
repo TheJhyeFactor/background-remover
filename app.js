@@ -1,5 +1,7 @@
 // Background Remover - All processing client-side
-// Library loaded via script tag in HTML as global 'imglyRemoveBackground'
+
+// Import from esm.sh which handles dependencies properly
+import removeBackground from 'https://esm.sh/@imgly/background-removal@1.4.5';
 
 class BackgroundRemover {
     constructor() {
@@ -125,8 +127,8 @@ class BackgroundRemover {
             // Update progress
             this.updateProgress(10, 'Loading AI model...');
 
-            // Remove background using global function from loaded script
-            const blob = await imglyRemoveBackground.removeBackground(imageUrl, {
+            // Remove background
+            const blob = await removeBackground(imageUrl, {
                 progress: (key, current, total) => {
                     const percentage = Math.round((current / total) * 80) + 10;
                     const messages = {

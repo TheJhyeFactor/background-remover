@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Background Remover - AI-Powered Background Removal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="privacy-banner">
+        🔒 100% PRIVATE - All processing happens in your browser. Images never uploaded to servers.
+    </div>
+
+    <div class="container">
+        <header class="main-header">
+            <div class="logo-section">
+                <h1>✂️ Background Remover</h1>
+                <p>AI-Powered Background Removal - Entirely Client-Side</p>
+            </div>
+        </header>
+
+        <main class="workspace">
+            <div class="content-wrapper">
+                <section class="upload-section" id="upload-section">
+                    <h2>Remove Image Background</h2>
+
+                    <div class="upload-zone" id="upload-zone">
+                        <div class="upload-content">
+                            <div class="upload-icon">🖼️</div>
+                            <p class="upload-title">Drop your image here</p>
+                            <p class="upload-subtitle">or click to browse</p>
+                            <input type="file" id="file-input" accept="image/*" hidden>
+                            <button class="btn-primary" id="browse-btn">Browse Images</button>
+                        </div>
+                    </div>
+
+                    <div class="supported-formats">
+                        <p>Supported formats: JPG, PNG, WEBP, GIF</p>
+                        <p>Maximum file size: 10MB for best performance</p>
+                    </div>
+                </section>
+
+                <section class="processing-section" id="processing-section" style="display: none;">
+                    <h2>Processing...</h2>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                        <p class="progress-text" id="progress-text">Initializing AI model...</p>
+                    </div>
+                    <div class="processing-info">
+                        <p>⚡ Using AI to detect and remove background</p>
+                        <p>🔒 Everything happens locally in your browser</p>
+                    </div>
+                </section>
+
+                <section class="result-section" id="result-section" style="display: none;">
+                    <h2>Background Removed!</h2>
+
+                    <div class="comparison-container">
+                        <div class="image-box">
+                            <h3>Original</h3>
+                            <div class="image-wrapper">
+                                <img id="original-image" alt="Original">
+                            </div>
+                        </div>
+                        <div class="image-box">
+                            <h3>Result</h3>
+                            <div class="image-wrapper" id="result-wrapper">
+                                <canvas id="result-canvas"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="background-options">
+                        <h3>Background Options</h3>
+                        <div class="bg-controls">
+                            <button class="bg-option active" data-bg="transparent" title="Transparent">
+                                <span class="checkerboard"></span>
+                                <span>Transparent</span>
+                            </button>
+                            <button class="bg-option" data-bg="white" title="White">
+                                <span style="background: white;"></span>
+                                <span>White</span>
+                            </button>
+                            <button class="bg-option" data-bg="black" title="Black">
+                                <span style="background: black;"></span>
+                                <span>Black</span>
+                            </button>
+                            <button class="bg-option" data-bg="blue" title="Blue">
+                                <span style="background: #3b82f6;"></span>
+                                <span>Blue</span>
+                            </button>
+                            <button class="bg-option" data-bg="gradient" title="Gradient">
+                                <span style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></span>
+                                <span>Gradient</span>
+                            </button>
+                            <div class="custom-color-wrapper">
+                                <label for="custom-color" class="bg-option" title="Custom Color">
+                                    <input type="color" id="custom-color" value="#f0f0f0">
+                                    <span>Custom</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn-action" id="download-btn">Download PNG</button>
+                        <button class="btn-secondary" id="try-another-btn">Try Another Image</button>
+                    </div>
+                </section>
+
+                <section class="features-section">
+                    <h2>Features</h2>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">🤖</div>
+                            <h3>AI-Powered</h3>
+                            <p>Advanced machine learning model for accurate background detection</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🔒</div>
+                            <h3>100% Private</h3>
+                            <p>All processing happens locally in your browser. No uploads.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">⚡</div>
+                            <h3>Fast Processing</h3>
+                            <p>Quick results powered by WebAssembly and GPU acceleration</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🎨</div>
+                            <h3>Custom Backgrounds</h3>
+                            <p>Replace with solid colors, gradients, or keep transparent</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>

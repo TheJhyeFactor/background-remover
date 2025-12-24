@@ -58,7 +58,7 @@
                         <div class="image-box">
                             <h3>Original</h3>
                             <div class="image-wrapper">
-                                <img id="original-image" alt="Original">
+                                <canvas id="original-image"></canvas>
                             </div>
                         </div>
                         <div class="image-box">
@@ -69,60 +69,68 @@
                         </div>
                     </div>
 
-                    <div class="background-options">
-                        <h3>Background Options</h3>
-                        <div class="bg-controls">
-                            <button class="bg-option active" data-bg="transparent" title="Transparent">
-                                <span class="checkerboard"></span>
-                                <span>Transparent</span>
-                            </button>
-                            <button class="bg-option" data-bg="white" title="White">
-                                <span style="background: white;"></span>
-                                <span>White</span>
-                            </button>
-                            <button class="bg-option" data-bg="black" title="Black">
-                                <span style="background: black;"></span>
-                                <span>Black</span>
-                            </button>
-                            <button class="bg-option" data-bg="blue" title="Blue">
-                                <span style="background: #3b82f6;"></span>
-                                <span>Blue</span>
-                            </button>
-                            <button class="bg-option" data-bg="gradient" title="Gradient">
-                                <span style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></span>
-                                <span>Gradient</span>
-                            </button>
-                            <div class="custom-color-wrapper">
-                                <label for="custom-color" class="bg-option" title="Custom Color">
-                                    <input type="color" id="custom-color" value="#f0f0f0">
-                                    <span>Color</span>
-                                </label>
-                            </div>
-                            <div class="custom-image-wrapper">
-                                <label for="custom-bg-image" class="bg-option" title="Upload Background Image">
-                                    <input type="file" id="custom-bg-image" accept="image/*" hidden>
-                                    <span>🖼️</span>
-                                    <span>Image</span>
-                                </label>
+                    <div class="options-container">
+                        <div class="background-options">
+                            <h3>Background</h3>
+                            <div class="bg-controls">
+                                <button class="bg-option active" data-bg="transparent" title="Transparent">
+                                    <span class="checkerboard"></span>
+                                    <span>None</span>
+                                </button>
+                                <button class="bg-option" data-bg="white" title="White">
+                                    <span style="background: white;"></span>
+                                    <span>White</span>
+                                </button>
+                                <button class="bg-option" data-bg="black" title="Black">
+                                    <span style="background: black;"></span>
+                                    <span>Black</span>
+                                </button>
+                                <button class="bg-option" data-bg="blue" title="Blue">
+                                    <span style="background: #3b82f6;"></span>
+                                    <span>Blue</span>
+                                </button>
+                                <button class="bg-option" data-bg="gradient" title="Gradient">
+                                    <span style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></span>
+                                    <span>Gradient</span>
+                                </button>
+                                <div class="custom-color-wrapper">
+                                    <label for="custom-color" class="bg-option" title="Custom Color">
+                                        <input type="color" id="custom-color" value="#f0f0f0">
+                                        <span>Custom</span>
+                                    </label>
+                                </div>
+                                <div class="custom-image-wrapper">
+                                    <label for="custom-bg-image" class="bg-option" title="Upload Background Image">
+                                        <input type="file" id="custom-bg-image" accept="image/*" hidden>
+                                        <span>📁</span>
+                                        <span>Upload</span>
+                                    </label>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="download-options">
-                        <h3>Download Options</h3>
-                        <div class="format-controls">
-                            <label class="format-option">
-                                <input type="radio" name="format" value="png" checked>
-                                <span>PNG (Transparent)</span>
-                            </label>
-                            <label class="format-option">
-                                <input type="radio" name="format" value="jpg">
-                                <span>JPG (Smaller File)</span>
-                            </label>
-                        </div>
-                        <div class="quality-control" id="quality-control" style="display: none;">
-                            <label for="jpg-quality">JPG Quality: <span id="quality-value">90</span>%</label>
-                            <input type="range" id="jpg-quality" min="60" max="100" value="90" step="5">
+                        <div class="download-options">
+                            <h3>Download Format</h3>
+                            <div class="format-controls">
+                                <label class="format-option">
+                                    <input type="radio" name="format" value="png" checked>
+                                    <div class="format-info">
+                                        <span class="format-name">PNG</span>
+                                        <span class="format-desc">Transparent background</span>
+                                    </div>
+                                </label>
+                                <label class="format-option">
+                                    <input type="radio" name="format" value="jpg">
+                                    <div class="format-info">
+                                        <span class="format-name">JPG</span>
+                                        <span class="format-desc">Smaller file size</span>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="quality-control" id="quality-control" style="display: none;">
+                                <label for="jpg-quality">Quality: <span id="quality-value">90</span>%</label>
+                                <input type="range" id="jpg-quality" min="60" max="100" value="90" step="5">
+                            </div>
                         </div>
                     </div>
 
@@ -212,6 +220,6 @@
         </footer>
     </div>
 
-    <script type="module" src="app.js?v=6"></script>
+    <script type="module" src="app.js?v=7"></script>
 </body>
 </html>

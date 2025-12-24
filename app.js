@@ -212,9 +212,12 @@ class BackgroundRemover {
         // Show result section
         this.showSection('result');
 
-        // Display original image
-        const originalImg = document.getElementById('original-image');
-        originalImg.src = this.originalImage.src;
+        // Display original image on canvas
+        const originalCanvas = document.getElementById('original-image');
+        const ctx = originalCanvas.getContext('2d');
+        originalCanvas.width = this.originalImage.width;
+        originalCanvas.height = this.originalImage.height;
+        ctx.drawImage(this.originalImage, 0, 0);
 
         // Display result with current background
         await this.updateResultDisplay();

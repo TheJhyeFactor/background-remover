@@ -1,7 +1,5 @@
 // Background Remover - All processing client-side
-
-// Import background removal library from CDN
-import removeBackground from 'https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/+esm';
+// Library loaded via script tag in HTML as global 'imglyRemoveBackground'
 
 class BackgroundRemover {
     constructor() {
@@ -127,8 +125,8 @@ class BackgroundRemover {
             // Update progress
             this.updateProgress(10, 'Loading AI model...');
 
-            // Remove background
-            const blob = await removeBackground(imageUrl, {
+            // Remove background using global function from loaded script
+            const blob = await imglyRemoveBackground.removeBackground(imageUrl, {
                 progress: (key, current, total) => {
                     const percentage = Math.round((current / total) * 80) + 10;
                     const messages = {

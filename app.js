@@ -81,9 +81,10 @@ class BackgroundRemover {
             }
         });
 
-        // Also make upload zone clickable
+        // Also make upload zone clickable (but not the button)
         uploadZone.addEventListener('click', (e) => {
-            if (e.target.closest('.upload-zone')) {
+            // Don't trigger if clicking the browse button directly
+            if (!e.target.closest('#browse-btn')) {
                 document.getElementById('file-input').click();
             }
         });

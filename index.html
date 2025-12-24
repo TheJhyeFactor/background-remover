@@ -98,15 +98,44 @@
                             <div class="custom-color-wrapper">
                                 <label for="custom-color" class="bg-option" title="Custom Color">
                                     <input type="color" id="custom-color" value="#f0f0f0">
-                                    <span>Custom</span>
+                                    <span>Color</span>
+                                </label>
+                            </div>
+                            <div class="custom-image-wrapper">
+                                <label for="custom-bg-image" class="bg-option" title="Upload Background Image">
+                                    <input type="file" id="custom-bg-image" accept="image/*" hidden>
+                                    <span>🖼️</span>
+                                    <span>Image</span>
                                 </label>
                             </div>
                         </div>
                     </div>
 
+                    <div class="download-options">
+                        <h3>Download Options</h3>
+                        <div class="format-controls">
+                            <label class="format-option">
+                                <input type="radio" name="format" value="png" checked>
+                                <span>PNG (Transparent)</span>
+                            </label>
+                            <label class="format-option">
+                                <input type="radio" name="format" value="jpg">
+                                <span>JPG (Smaller File)</span>
+                            </label>
+                        </div>
+                        <div class="quality-control" id="quality-control" style="display: none;">
+                            <label for="jpg-quality">JPG Quality: <span id="quality-value">90</span>%</label>
+                            <input type="range" id="jpg-quality" min="60" max="100" value="90" step="5">
+                        </div>
+                    </div>
+
+                    <div class="image-info" id="image-info">
+                        <p><strong>Original:</strong> <span id="original-info"></span></p>
+                    </div>
+
                     <div class="action-buttons">
-                        <button class="btn-action" id="download-btn">Download PNG</button>
-                        <button class="btn-secondary" id="try-another-btn">Try Another Image</button>
+                        <button class="btn-action" id="download-btn">💾 Download Image</button>
+                        <button class="btn-secondary" id="try-another-btn">🔄 Try Another Image</button>
                     </div>
                 </section>
 
@@ -185,6 +214,6 @@
         </footer>
     </div>
 
-    <script type="module" src="app.js?v=3"></script>
+    <script type="module" src="app.js?v=4"></script>
 </body>
 </html>

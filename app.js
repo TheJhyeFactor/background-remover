@@ -8,6 +8,8 @@ class BackgroundRemover {
         this.originalImage = null;
         this.resultBlob = null;
         this.currentBackground = 'transparent';
+        this.customBackgroundImage = null;
+        this.originalFileName = '';
         console.log('BackgroundRemover initialized');
         this.init();
     }
@@ -52,7 +54,31 @@ class BackgroundRemover {
 
         // Custom color picker
         document.getElementById('custom-color').addEventListener('input', (e) => {
-            this.setBackground('custom', e.target.value);
+            this.setBackground('custom-color', e.target.value);
+        });
+
+        // Custom background image upload
+        document.getElementById('custom-bg-image').addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                this.loadCustomBackground(e.target.files[0]);
+            }
+        });
+
+        // Format radio buttons
+        document.querySelectorAll('input[name="format"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                const qualityControl = document.getElementById('quality-control');
+                if (e.target.value === 'jpg') {
+                    qualityControl.style.display = 'block';
+                } else {
+                    qualityControl.style.display = 'none';
+                }
+            });
+        });
+
+        // JPG quality slider
+        document.getElementById('jpg-quality').addEventListener('input', (e) => {
+            document.getElementById('quality-value').textContent = e.target.value;
         });
 
         // Download button
@@ -104,21 +130,15 @@ class BackgroundRemover {
     async handleFile(file) {
         console.log('handleFile called with:', file);
 
-        // Validate file size (10MB limit)
-        if (file.size > 10 * 1024 * 1024) {
-            alert('File is too large. Please use an image under 10MB for best performance.');
-            return;
-        }
-
-        console.log('File size OK, showing processing section...');
+        this.originalFileName = file.name;
 
         // Show processing section
         this.showSection('processing');
 
         try {
             // Read file as image
-            const imageUrl = URL.createObjectURL(file);
-            const img = new Image();
+            let imageUrl = URL.createObjectURL(file);
+            let img = new Image();
 
             console.log('Loading image from URL:', imageUrl);
 
@@ -129,7 +149,20 @@ class BackgroundRemover {
             });
 
             console.log('Image loaded successfully');
+
+            // Auto-resize if image is too large (for better performance)
+            if (img.width > 2000 || img.height > 2000 || file.size > 10 * 1024 * 1024) {
+                console.log('Image is large, resizing for better performance...');
+                img = await this.resizeImage(img, 2000);
+            }
+
             this.originalImage = img;
+
+            // Display image info
+            const sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
+            document.getElementById('original-info').textContent =
+                `${img.width} × ${img.height} pixels, ${sizeInMB} MB`;
+
 
             // Update progress
             this.updateProgress(10, 'Loading AI model...');
@@ -237,6 +270,14 @@ class BackgroundRemover {
             gradient.addColorStop(1, '#764ba2');
             ctx.fillStyle = gradient;
             ctx.fillRect(0, 0, width, height);
+        } else if (this.currentBackground === 'custom-image' && this.customBackgroundImage) {
+            // Custom background image - scale to cover canvas
+            const scale = Math.max(width / this.customBackgroundImage.width, height / this.customBackgroundImage.height);
+            const scaledWidth = this.customBackgroundImage.width * scale;
+            const scaledHeight = this.customBackgroundImage.height * scale;
+            const x = (width - scaledWidth) / 2;
+            const y = (height - scaledHeight) / 2;
+            ctx.drawImage(this.customBackgroundImage, x, y, scaledWidth, scaledHeight);
         } else if (this.currentBackground.startsWith('#')) {
             // Custom color
             ctx.fillStyle = this.currentBackground;
@@ -244,18 +285,22 @@ class BackgroundRemover {
         }
     }
 
-    async setBackground(type, customColor = null) {
+    async setBackground(type, customValue = null) {
         // Update active button
         document.querySelectorAll('.bg-option').forEach(btn => {
             btn.classList.remove('active');
         });
 
-        if (type === 'custom') {
-            this.currentBackground = customColor;
+        if (type === 'custom-color') {
+            this.currentBackground = customValue;
             document.querySelector('.custom-color-wrapper label').classList.add('active');
+        } else if (type === 'custom-image') {
+            this.currentBackground = 'custom-image';
+            document.querySelector('.custom-image-wrapper label').classList.add('active');
         } else {
             this.currentBackground = type;
-            document.querySelector(`[data-bg="${type}"]`).classList.add('active');
+            const btn = document.querySelector(`[data-bg="${type}"]`);
+            if (btn) btn.classList.add('active');
         }
 
         // Update result display
@@ -267,15 +312,27 @@ class BackgroundRemover {
 
         const canvas = document.getElementById('result-canvas');
 
-        // Convert canvas to blob
+        // Get selected format
+        const format = document.querySelector('input[name="format"]:checked').value;
+        const quality = parseInt(document.getElementById('jpg-quality').value) / 100;
+
+        // Determine file extension and MIME type
+        const mimeType = format === 'jpg' ? 'image/jpeg' : 'image/png';
+        const extension = format === 'jpg' ? 'jpg' : 'png';
+
+        // Get base filename (remove extension from original)
+        const baseName = this.originalFileName.replace(/\.[^/.]+$/, '');
+        const fileName = `${baseName}-no-bg.${extension}`;
+
+        // Convert canvas to blob with appropriate format
         canvas.toBlob((blob) => {
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `background-removed-${Date.now()}.png`;
+            a.download = fileName;
             a.click();
             URL.revokeObjectURL(url);
-        }, 'image/png');
+        }, mimeType, quality);
     }
 
     showSection(section) {
@@ -300,6 +357,75 @@ class BackgroundRemover {
         // Reset background options
         document.querySelectorAll('.bg-option').forEach(btn => btn.classList.remove('active'));
         document.querySelector('[data-bg="transparent"]').classList.add('active');
+
+        // Reset format to PNG
+        document.querySelector('input[name="format"][value="png"]').checked = true;
+        document.getElementById('quality-control').style.display = 'none';
+
+        // Reset custom background
+        this.customBackgroundImage = null;
+        document.getElementById('custom-bg-image').value = '';
+    }
+
+    async resizeImage(img, maxSize) {
+        // Create canvas for resizing
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Calculate new dimensions maintaining aspect ratio
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+            if (width > maxSize) {
+                height = (height * maxSize) / width;
+                width = maxSize;
+            }
+        } else {
+            if (height > maxSize) {
+                width = (width * maxSize) / height;
+                height = maxSize;
+            }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+
+        // Draw resized image
+        ctx.drawImage(img, 0, 0, width, height);
+
+        // Convert to image
+        return new Promise((resolve) => {
+            canvas.toBlob((blob) => {
+                const url = URL.createObjectURL(blob);
+                const resizedImg = new Image();
+                resizedImg.onload = () => {
+                    URL.revokeObjectURL(url);
+                    resolve(resizedImg);
+                };
+                resizedImg.src = url;
+            });
+        });
+    }
+
+    async loadCustomBackground(file) {
+        try {
+            const imageUrl = URL.createObjectURL(file);
+            const img = new Image();
+
+            await new Promise((resolve, reject) => {
+                img.onload = resolve;
+                img.onerror = reject;
+                img.src = imageUrl;
+            });
+
+            this.customBackgroundImage = img;
+            await this.setBackground('custom-image');
+            URL.revokeObjectURL(imageUrl);
+        } catch (error) {
+            console.error('Error loading custom background:', error);
+            alert('Error loading background image. Please try another file.');
+        }
     }
 }
 

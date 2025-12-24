@@ -1,5 +1,10 @@
 # Background Remover
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Try%20Now-success?style=for-the-badge)](https://thejhyefactor.github.io/background-remover/)
+[![GitHub Pages](https://img.shields.io/badge/Deployed%20on-GitHub%20Pages-blue?style=for-the-badge&logo=github)](https://thejhyefactor.github.io/background-remover/)
+
+**🔗 Live Demo:** [https://thejhyefactor.github.io/background-remover/](https://thejhyefactor.github.io/background-remover/)
+
 **AI-Powered Background Removal - 100% Client-Side**
 
 Remove image backgrounds instantly using advanced machine learning, all in your browser. No uploads, no servers, complete privacy.

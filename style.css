@@ -62,6 +62,22 @@ body {
     font-size: 1.05em;
 }
 
+.logo-section .brand {
+    margin-top: 5px;
+}
+
+.logo-section .brand a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.logo-section .brand a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
 .workspace {
     padding: 60px 40px;
     background: var(--bg-secondary);

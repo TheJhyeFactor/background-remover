@@ -165,22 +165,22 @@ class BackgroundRemover {
 
 
             // Update progress
-            this.updateProgress(10, 'Loading AI model...');
+            this.updateProgress(10, 'Loading...');
 
             console.log('Calling removeBackground...');
 
-            // Remove background with config for GitHub Pages (no cross-origin isolation)
+            // Remove background with proper CDN configuration
             const blob = await removeBackground(imageUrl, {
-                publicPath: 'https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/dist/',
-                debug: true,
-                proxyToWorker: false, // Disable worker to avoid cross-origin issues
+                publicPath: 'https://esm.sh/@imgly/background-removal@1.4.5/dist/',
+                debug: false,
+                model: 'small', // Use small model for better compatibility
                 progress: (key, current, total) => {
                     console.log(`Progress: ${key} - ${current}/${total}`);
                     const percentage = Math.round((current / total) * 80) + 10;
                     const messages = {
-                        'fetch': 'Loading model...',
-                        'compute': 'Processing image...',
-                        'post': 'Finalizing...'
+                        'fetch': 'Loading...',
+                        'compute': 'Processing...',
+                        'post': 'Finishing...'
                     };
                     this.updateProgress(percentage, messages[key] || 'Processing...');
                 }
@@ -352,7 +352,7 @@ class BackgroundRemover {
 
         // Reset progress
         document.getElementById('progress-fill').style.width = '0%';
-        document.getElementById('progress-text').textContent = 'Initializing AI model...';
+        document.getElementById('progress-text').textContent = 'Loading...';
 
         // Reset background options
         document.querySelectorAll('.bg-option').forEach(btn => btn.classList.remove('active'));

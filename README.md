@@ -1,29 +1,32 @@
 # Background Remover
 
+**by TheJhyeFactor**
+
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Try%20Now-success?style=for-the-badge)](https://thejhyefactor.github.io/background-remover/)
 [![GitHub Pages](https://img.shields.io/badge/Deployed%20on-GitHub%20Pages-blue?style=for-the-badge&logo=github)](https://thejhyefactor.github.io/background-remover/)
 
 **🔗 Live Demo:** [https://thejhyefactor.github.io/background-remover/](https://thejhyefactor.github.io/background-remover/)
 
-**AI-Powered Background Removal - 100% Client-Side**
+**100% Client-Side Background Removal**
 
-Remove image backgrounds instantly using advanced machine learning, all in your browser. No uploads, no servers, complete privacy.
+Remove image backgrounds instantly in your browser. No uploads, no servers, complete privacy.
 
 ## ✨ Features
 
-- **🤖 AI-Powered** - Advanced ML model for accurate background detection
-- **🔒 100% Private** - All processing happens locally in your browser
-- **⚡ Fast** - Quick results using WebAssembly and GPU acceleration
-- **🎨 Custom Backgrounds** - Replace with colors, gradients, or keep transparent
+- **🔒 Private** - All processing happens locally in your browser
+- **⚡ Fast** - Quick processing with automatic resizing for large images
+- **🎨 Custom Backgrounds** - Colors, gradients, or upload your own image
+- **💾 Format Options** - Download as PNG with transparency or JPG with quality control
 - **📱 Responsive** - Works on desktop and mobile devices
-- **💾 High Quality** - Download as PNG with transparency
+- **🖼️ Auto-Resize** - Handles any image size automatically
 
 ## 🚀 How to Use
 
 1. **Upload Image** - Drop an image or click to browse
-2. **Wait for Processing** - AI removes the background (10-30 seconds)
-3. **Choose Background** - Pick transparent, white, black, gradient, or custom color
-4. **Download** - Save your image as PNG
+2. **Wait for Processing** - Background is automatically removed
+3. **Choose Background** - Pick transparent, colors, gradients, or upload your own
+4. **Select Format** - PNG with transparency or JPG with quality control
+5. **Download** - Save your image
 
 ## 🛠️ Technical Stack
 
@@ -88,14 +91,14 @@ Works in all modern browsers:
 
 ## 👨‍💻 Author
 
-Built by **Jhye O'meley** ([@TheJhyeFactor](https://github.com/TheJhyeFactor))
+**TheJhyeFactor** - Jhye O'meley
 
-Showcasing:
-- AI/ML integration in the browser
-- Privacy-focused web applications
-- Modern JavaScript (ES6 modules)
-- Canvas API mastery
-- Professional UI/UX design
+Building privacy-focused web tools
+
+- [GitHub](https://github.com/TheJhyeFactor)
+- [LinkedIn](https://linkedin.com/in/jhye-omeley)
+- [Twitter](https://twitter.com/TheJhyeFactor)
+- [PDF Tools](https://thejhyefactor.github.io/pdf-tools/)
 
 ## 📄 License
 

@@ -102,11 +102,15 @@ class BackgroundRemover {
     }
 
     async handleFile(file) {
+        console.log('handleFile called with:', file);
+
         // Validate file size (10MB limit)
         if (file.size > 10 * 1024 * 1024) {
             alert('File is too large. Please use an image under 10MB for best performance.');
             return;
         }
+
+        console.log('File size OK, showing processing section...');
 
         // Show processing section
         this.showSection('processing');
@@ -116,16 +120,21 @@ class BackgroundRemover {
             const imageUrl = URL.createObjectURL(file);
             const img = new Image();
 
+            console.log('Loading image from URL:', imageUrl);
+
             await new Promise((resolve, reject) => {
                 img.onload = resolve;
                 img.onerror = reject;
                 img.src = imageUrl;
             });
 
+            console.log('Image loaded successfully');
             this.originalImage = img;
 
             // Update progress
             this.updateProgress(10, 'Loading AI model...');
+
+            console.log('Calling removeBackground...');
 
             // Remove background
             const blob = await removeBackground(imageUrl, {
@@ -140,10 +149,13 @@ class BackgroundRemover {
                 }
             });
 
+            console.log('removeBackground completed, blob:', blob);
             this.resultBlob = blob;
 
             // Update progress to complete
             this.updateProgress(100, 'Complete!');
+
+            console.log('Showing result...');
 
             // Small delay before showing result
             setTimeout(() => {

@@ -169,11 +169,8 @@ class BackgroundRemover {
 
             console.log('Calling removeBackground...');
 
-            // Remove background with proper CDN configuration
+            // Remove background - let library use default CDN
             const blob = await removeBackground(imageUrl, {
-                publicPath: 'https://esm.sh/@imgly/background-removal@1.4.5/dist/',
-                debug: false,
-                model: 'small', // Use small model for better compatibility
                 progress: (key, current, total) => {
                     console.log(`Progress: ${key} - ${current}/${total}`);
                     const percentage = Math.round((current / total) * 80) + 10;

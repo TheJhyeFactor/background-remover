@@ -8,18 +8,29 @@ class BackgroundRemover {
         this.originalImage = null;
         this.resultBlob = null;
         this.currentBackground = 'transparent';
+        console.log('BackgroundRemover initialized');
         this.init();
     }
 
     init() {
+        console.log('Setting up event listeners...');
         this.setupEventListeners();
         this.setupDragAndDrop();
+        console.log('Setup complete');
     }
 
     setupEventListeners() {
         // Upload button
-        document.getElementById('browse-btn').addEventListener('click', () => {
-            document.getElementById('file-input').click();
+        const browseBtn = document.getElementById('browse-btn');
+        const fileInput = document.getElementById('file-input');
+
+        console.log('Browse button:', browseBtn);
+        console.log('File input:', fileInput);
+
+        browseBtn.addEventListener('click', (e) => {
+            console.log('Browse button clicked!', e);
+            e.stopPropagation();
+            fileInput.click();
         });
 
         // File input change
